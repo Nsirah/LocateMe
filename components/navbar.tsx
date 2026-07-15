@@ -44,7 +44,7 @@ const handleLogout = async () => {
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">LM</span>
             </div>
-            <span className="font-bold text-xl hidden sm:inline bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">LocateMe</span>
+           <span className="font-bold text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">LocateMe</span>
           </Link>
 
           {/* Desktop Navigation */}
