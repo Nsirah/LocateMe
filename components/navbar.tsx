@@ -108,6 +108,16 @@ const handleLogout = async () => {
 
 </div>
           {/* Mobile Menu Button */}
+          <button
+  onClick={() => setIsOpen(!isOpen)}
+  className="md:hidden p-2 rounded-lg hover:bg-muted transition"
+>
+  {isOpen ? (
+    <X className="h-6 w-6" />
+  ) : (
+    <Menu className="h-6 w-6" />
+  )}
+</button>
       
         </div>
 
