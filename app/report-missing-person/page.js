@@ -2,9 +2,26 @@
 
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { auth } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import MissingPersonInformation from './components/MissingPersonInformation'
 
 export default function ReportMissingPersonPage() {
+
+  const router = useRouter();
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      router.push("/login");
+    }
+  });
+
+  return () => unsubscribe();
+}, [router]);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />

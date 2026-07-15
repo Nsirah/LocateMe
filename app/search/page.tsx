@@ -8,6 +8,10 @@ import { PersonCard } from '@/components/person-card'
 import { Button } from '@/components/ui/button'
 import { Search, Filter, X } from 'lucide-react'
 import { db } from '@/lib/firebase'
+import { auth } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation";
+
 
 export default function SearchPage() {
 
@@ -179,6 +183,18 @@ const hasActiveFilters =
   selectedRegion !== "all" ||
   selectedCity !== "all" ||
   selectedStatus !== "all";
+
+  const router = useRouter();
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      router.push("/login");
+    }
+  });
+
+  return () => unsubscribe();
+}, [router]);
 
 return (
   <div className="flex flex-col min-h-screen">

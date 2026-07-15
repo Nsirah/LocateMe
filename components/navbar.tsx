@@ -35,6 +35,15 @@ const handleLogout = async () => {
 
 };
 
+const handleProtectedNavigation = (path) => {
+  if (!user) {
+    router.push("/login");
+    return;
+  }
+
+  router.push(path);
+};
+
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,16 +61,24 @@ const handleLogout = async () => {
             <Link href="/" className="text-foreground hover:text-primary transition">
               Home
             </Link>
-            <Link href="/search" className="text-foreground hover:text-primary transition">
-              Search
-            </Link>
-            <Link href="/report-missing-person" className="text-foreground hover:text-primary transition"
-            >
-             Report Missing
-           </Link>
-            <Link href="/submit-sighting" className="text-foreground hover:text-primary transition">
-              Report Sighting
-            </Link>
+            <button
+  onClick={() => handleProtectedNavigation("/search")}
+  className="text-foreground hover:text-primary transition"
+>
+  Search
+</button>
+            <button
+  onClick={() => handleProtectedNavigation("/Report Missing person")}
+  className="text-foreground hover:text-primary transition"
+>
+  Report a Missing person
+</button>
+           <button
+  onClick={() => handleProtectedNavigation("/Report sighting")}
+  className="text-foreground hover:text-primary transition"
+>
+  Report Sighting
+</button>
             <Link href="/about" className="text-foreground hover:text-primary transition">
               About
             </Link>
@@ -128,16 +145,24 @@ const handleLogout = async () => {
               <Link href="/" className="text-foreground hover:text-primary transition">
                 Home
               </Link>
-              <Link href="/search" className="text-foreground hover:text-primary transition">
-                Search
-              </Link>
-              <Link href="/report-missing-person"  className="text-foreground hover:text-primary transition"
-                >
-                Report Missing
-              </Link>
-              <Link href="/submit-sighting" className="text-foreground hover:text-primary transition">
-                Report Sighting
-              </Link>
+              <button
+  onClick={() => handleProtectedNavigation("/search")}
+  className="text-foreground hover:text-primary transition"
+>
+  Search
+</button>
+             <button
+  onClick={() => handleProtectedNavigation("/Report a missing person")}
+  className="text-foreground hover:text-primary transition"
+>
+Report a Missing person
+</button>
+              <button
+  onClick={() => handleProtectedNavigation("/Report sighting")}
+  className="text-foreground hover:text-primary transition"
+>
+ Report Sighting
+</button>
 
               <Link href="/about" className="text-foreground hover:text-primary transition">
                 About

@@ -5,6 +5,7 @@ import { Footer } from '@/components/footer'
 import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   collection,
@@ -125,6 +126,18 @@ const handleFound = async (notification) => {
   }
 
 };
+
+const router = useRouter();
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      router.push("/login");
+    }
+  });
+
+  return () => unsubscribe();
+}, [router]);
 
 
   return (

@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { auth } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation";
 import { Button } from '@/components/ui/button'
 import dynamic from "next/dynamic";
 
@@ -135,6 +138,18 @@ const handleSubmit = async (e: React.FormEvent) => {
 }
   );
 }, []);
+
+const router = useRouter();
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      router.push("/login");
+    }
+  });
+
+  return () => unsubscribe();
+}, [router]);
 
   return (
     <div className="flex flex-col min-h-screen">

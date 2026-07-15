@@ -3,9 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { auth } from "@/lib/firebase";
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Heart, Share2, Eye } from 'lucide-react'
+import { useRouter } from "next/navigation";
 import type { MissingPerson } from '@/lib/mock-data'
 
 interface PersonCardProps {
@@ -18,6 +20,8 @@ export function PersonCard({ person, onSave, isSaved = false }: PersonCardProps)
   const [isHovered, setIsHovered] = useState(false)
   const [saved, setSaved] = useState(isSaved)
   const [showShare, setShowShare] = useState(false);
+  const router = useRouter();
+  
 
   const handleSave = () => {
     setSaved(!saved)
@@ -60,15 +64,20 @@ console.log(person);
         {/* Overlay on hover */}
         {isHovered && (
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center gap-2">
-            <Link href={`/person/${person.id}`}>
-              <Button
-                size="sm"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground"
-              >
-                <Eye size={16} className="mr-1" />
-                View Details
-              </Button>
-            </Link>
+            <Button
+  size="sm"
+  onClick={() => {
+    if (!auth.currentUser) {
+      router.push("/login");
+    } else {
+      router.push(`/person/${person.id}`);
+    }
+  }}
+  className="bg-primary hover:bg-primary/90 text-primary-foreground"
+>
+  <Eye size={16} className="mr-1" />
+  View Details
+</Button>
           </div>
         )}
 
@@ -150,16 +159,18 @@ console.log(person);
   
         {/* Action Buttons */}
         <div className="flex gap-2">
-         <Link href={`/person/${person.id}`} className="flex-1">
- 
- <Button
-  className="w-full rounded-sm bg-primary text-white hover:bg-primary/90"
+       <Button
+  onClick={() => {
+    if (!auth.currentUser) {
+      router.push("/login");
+    } else {
+      router.push(`/person/${person.id}`);
+    }
+  }}
+  className="w-full flex-1 rounded-sm bg-primary text-white hover:bg-primary/90"
 >
   Learn More
 </Button>
-
- 
-          </Link>
           <button
             onClick={handleSave}
             className={`px-4 py-2 rounded border transition-colors ${
